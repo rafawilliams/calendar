@@ -1,0 +1,17 @@
+.ui-datepicker td a.ui-state-default {
+    background-color: green;
+}
+
+.ui-datepicker td.ui-datepicker-week-end>a.ui-state-default {
+    background-color: yellow;
+}
+
+.ui-state-disabled {
+    opacity: 0 !important;
+}
+
+.ui-datepicker td.ui-state-disabled span.ui-state-default {
+    background-color: gray;
+}
+
+.ui-datepicker-group {}

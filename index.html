@@ -1,0 +1,125 @@
+<!doctype html>
+<html lang="en">
+
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>Programming Exercise UI Devs</title>
+    <link rel="stylesheet" href="css/jquery-ui.min.css">
+    <link rel="stylesheet" href="css/jquery-ui.theme.min.css">
+    <link rel="stylesheet" href="css/bulma.css">
+    <link rel="stylesheet" href="css/app.css">
+    <script src="js/jquery.js"></script>
+
+</head>
+
+<body>
+
+    <div id="app">
+
+        <section class="hero is-medium is-primary is-bold">
+            <div class="hero-body">
+                <div class="container">
+                    <h1 class="title">
+                        ProSoft
+                    </h1>
+                    <h2 class="subtitle">
+                        Programming Exercise UI Devs
+                    </h2>
+                </div>
+            </div>
+            <div class="notification">
+                <div class="container">
+
+                    <div class="field is-horizontal">
+                        <div class="field-label">
+                            <label class="label">Start Date</label>
+                        </div>
+                        <div class="field-body">
+                            <div class="field">
+                                <div class="control">
+                                    <input type="text" v-model="date" class="input is-hovered" placeholder="mm/dd/yyyy">
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="field is-horizontal">
+                        <div class="field-label">
+                            <label class="label">Number Of days</label>
+                        </div>
+                        <div class="field-body">
+                            <div class="field">
+                                <div class="control">
+                                    <input type="number" v-model="days_number" class="input is-hovered">
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="field is-horizontal">
+                        <div class="field-label">
+                            <label class="label">Country Code</label>
+                        </div>
+                        <div class="field-body">
+                            <div class="field">
+                                <div class="control">
+                                    <input type="text" v-model="country_code" class="input is-hovered">
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="field is-horizontal">
+                        <div class="field-label">
+                            <!-- Left empty for spacing -->
+                        </div>
+                        <div class="field-body">
+                            <div class="field">
+                                <div class="control">
+                                    <button class="button is-info is-pulled-right">
+                                Submit
+                                </button>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                </div>
+                <div class="container has-text-centered" id="from">
+                    <calendar></calendar>
+                </div>
+            </div>
+
+        </section>
+    </div>
+
+
+
+    <script src="js/jquery-ui.min.js"></script>
+    <script src="js/vue.js"></script>
+    <script>
+        $(document).ready(function() {
+            var dateFormat = "mm/dd/yy",
+                from = $("#from")
+                .datepicker({
+                    defaultDate: "+17",
+                    minDate: "w",
+                    maxDate: "+17",
+                    numberOfMonths: 2,
+                    gotoCurrent: true,
+                });
+
+
+            function getDate(element) {
+                var date;
+                try {
+                    date = $.datepicker.parseDate(dateFormat, element.value);
+                } catch (error) {
+                    date = null;
+                }
+
+                return date;
+            }
+        });
+    </script>
+</body>
+
+</html>
