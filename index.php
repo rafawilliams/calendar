@@ -3,18 +3,20 @@ require 'vendor/autoload.php';
 
 Flight::route('POST /holyday', function(){
 
-    $hapi = new HolidayAPI\v1('472993c6-5d7c-47d8-9cce-922b03ff39d3');
-    $year = Flight::get('year');
-    $code = Flight::get('country_code');
-    
-    $parameters = array(
-       'country' => 'US',
-       'year'    => 2016,
-);
+    $hapi = new HolidayAPI\v1('5a56524c-a8ff-4a50-a9af-5a088d594921');
+   
+    $code = Flight::request()->data->country_code;
+    $year = Flight::request()->data->year;
 
-if($year != '2008'){ 
-  $response = $hapi->holidays($parameters);
-}
+    $parameters = array(
+       'country' => $code,
+       'year'    => $year,
+    );
+
+    if($year == '2008'){ 
+      $response = $hapi->holidays($parameters);
+      Flight::json($response);
+    }
 
 });
 
