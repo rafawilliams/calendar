@@ -43,14 +43,15 @@
 
              var actualObjDate = moment(this.form.start_date, 'MM/DD/YYYY');
              var minDay = this.form.start_date;
-             var furuteObjDate = actualObjDate.add((this.form.days_number -1),'d') ;
+             var furuteObjDate = actualObjDate.clone().add((this.form.days_number -1),'d') ;
              var maxDate = furuteObjDate.format('MM/DD/YYYY');
 
              var month1 = parseInt(minDay.split('/')[0]);
              var month2 = parseInt(maxDate.split('/')[0]);
-             var numberOfMonths =  month2 - month1 +1;
-            
-            
+             
+             var numberOfMonths = furuteObjDate.diff(actualObjDate,'months') + 1
+           
+            console.log(numberOfMonths);
              axios.post('/holyday', {
                  country_code: this.form.country_code,
                  year: actualObjDate.year()

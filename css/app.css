@@ -18,8 +18,8 @@
 }
 
 .ui-datepicker-group {
-    float:left;
-    width:25% !important;
+    width:auto !important;
+    float:left !important;
 }
 
 #calendar{
@@ -28,5 +28,6 @@
 }
 
 .ui-datepicker-inline{
-    width:75% !important;
+   width:auto !important;
+   flex-wrap: wrap;
 }
