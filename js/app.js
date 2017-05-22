@@ -1,29 +1,7 @@
  var calendar = {
-     template: '<div id="calendar">hoy</div>',
-     mounted: function() {
-         this.$on('onSetcalendar', this.renderCalendar);
-     },
+     template: '<div id="calendar" class="container"></div>',
      data: function() {
          return {
-             fecha: ''
-         }
-     },
-     methods: {
-         renderCalendar: function(form) {
-             var date = moment(form.start_date, 'MM/DD/YYYY');
-             var mesActual = date.month();
-             this.fecha = date;
-             console.log(date.add(form.days_number, 'days').month());
-             var dateFormat = "mm/dd/yy";
-             this.nextTick(function() {
-                 $("#calendar").datepicker({
-                     defaultDate: "+" + form.days_number,
-                     minDate: "w",
-                     maxDate: "+17" + form.days_number,
-                     numberOfMonths: 2,
-                     gotoCurrent: true,
-                 });
-             });
          }
      }
  };
@@ -37,26 +15,74 @@
              days_number: '',
              country_code: ''
          },
+         holidays:{}
+     },
+     mounted:function(){
+         var self = this;
+        $('#date1').datepicker({
+            dateFormat:'mm/dd/yy',
+            changeMonth: true,
+            changeYear: true,
+            onSelect: function(date) {
+                self.form.start_date = date;
+            }
+        });
+
+     },
+     destroyed:function(){
+          $("#date1").datepicker('destroy');
      },
      components: {
          'calendar': calendar
      },
      methods: {
          submit: function() {
-             var date = moment(this.form.start_date, 'MM/DD/YYYY');
-             this.$emit('onSetcalendar', this.form);
-             $("#calendar").datepicker({
-                 defaultDate: "+" + this.form.days_number,
-                 minDate: "w",
-                 maxDate: "+17" + this.form.days_number,
-                 numberOfMonths: 2,
-                 gotoCurrent: true,
-             });
-             /*axios.post('/holyday', {
-                 country_code: this.form.country_code,
-                 year: date.year()
-             })*/
 
+            var self = this;
+             $("#calendar").datepicker('destroy');
+
+             var actualObjDate = moment(this.form.start_date, 'MM/DD/YYYY');
+             var minDay = this.form.start_date;
+             var furuteObjDate = actualObjDate.add((this.form.days_number -1),'d') ;
+             var maxDate = furuteObjDate.format('MM/DD/YYYY');
+
+             var month1 = parseInt(minDay.split('/')[0]);
+             var month2 = parseInt(maxDate.split('/')[0]);
+             var numberOfMonths =  month2 - month1 +1;
+            
+            
+             axios.post('/holyday', {
+                 country_code: this.form.country_code,
+                 year: actualObjDate.year()
+             }).then(function(response){
+
+                 self.holidays = response.data.holidays;
+
+                 $("#calendar").datepicker({
+                    defaultDate: minDay,
+                    beforeShowDay: self.setHolydays,
+                    duration: "slow",
+                    dateFormat:'mm/dd/yy',
+                    minDate: minDay,
+                    maxDate: maxDate,
+                    numberOfMonths:numberOfMonths
+                });
+
+             });
+
+         },
+         setHolydays:function(date){
+             
+             var fecha = moment(date).format('YYYY-MM-DD');
+           
+            if (this.holidays.hasOwnProperty(fecha)) {
+                
+                var holy = this.holidays[fecha][0];
+            
+                return [true,"special",holy.name];
+            } else {
+                return [true, ""];
+            }
          }
      }
 

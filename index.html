@@ -19,7 +19,7 @@
 
     <div id="app">
 
-        <section class="hero is-medium is-primary is-bold">
+        <section class="hero is-small is-primary is-bold">
             <div class="hero-body">
                 <div class="container">
                     <h1 class="title">
@@ -40,7 +40,7 @@
                         <div class="field-body">
                             <div class="field">
                                 <div class="control">
-                                    <input type="text" v-model="form.start_date" class="input is-hovered" placeholder="mm/dd/yyyy">
+                                    <input id="date1" name="dqt" type="text" v-model="form.start_date" class="input is-hovered" placeholder="mm/dd/yyyy">
                                 </div>
                             </div>
                         </div>
@@ -52,7 +52,7 @@
                         <div class="field-body">
                             <div class="field">
                                 <div class="control">
-                                    <input type="number" v-model="form.days_number" class="input is-hovered">
+                                    <input id='number_of' type="number" v-model="form.days_number" class="input is-hovered">
                                 </div>
                             </div>
                         </div>
@@ -64,7 +64,7 @@
                         <div class="field-body">
                             <div class="field">
                                 <div class="control">
-                                    <input type="text" v-model="form.country_code" class="input is-hovered">
+                                    <input id='country_code' type="text" v-model="form.country_code" class="input is-hovered" placeholder="US">
                                 </div>
                             </div>
                         </div>

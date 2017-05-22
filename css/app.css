@@ -1,3 +1,6 @@
+.ui-datepicker td.special>a.ui-state-default{
+    background-color: orange !important;
+}
 .ui-datepicker td a.ui-state-default {
     background-color: green;
 }
@@ -10,8 +13,20 @@
     opacity: 0 !important;
 }
 
-.ui-datepicker td.ui-state-disabled span.ui-state-default {
+.ui-datepicker td.ui-state-disabled>span.ui-state-default {
     background-color: gray;
 }
 
-.ui-datepicker-group {}
+.ui-datepicker-group {
+    float:left;
+    width:25% !important;
+}
+
+#calendar{
+    width: 100%;
+    margin: 15% auto;
+}
+
+.ui-datepicker-inline{
+    width:75% !important;
+}
