@@ -1,6 +1,7 @@
-.ui-datepicker td.special>a.ui-state-default{
+.ui-datepicker td.special>a.ui-state-default {
     background-color: orange !important;
 }
+
 .ui-datepicker td a.ui-state-default {
     background-color: green;
 }
@@ -18,16 +19,15 @@
 }
 
 .ui-datepicker-group {
-    width:auto !important;
-    float:left !important;
+    width: auto !important;
+    float: left !important;
 }
 
-#calendar{
+#calendar {
     width: 100%;
     margin: 15% auto;
 }
 
-.ui-datepicker-inline{
-   width:auto !important;
-   flex-wrap: wrap;
+.ui-datepicker-inline {
+    width: auto !important;
 }

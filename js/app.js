@@ -1,5 +1,5 @@
  var calendar = {
-     template: '<div id="calendar" class="container"></div>',
+     template: '<div id="calendar"></div>',
 
  };
 
@@ -44,10 +44,7 @@
              var furuteObjDate = actualObjDate.clone().add((this.form.days_number - 1), 'd');
              var maxDate = furuteObjDate.format('MM/DD/YYYY');
 
-             var month1 = parseInt(minDay.split('/')[0]);
-             var month2 = parseInt(maxDate.split('/')[0]);
-
-             var numberOfMonths = furuteObjDate.diff(actualObjDate, 'months') + 1
+             var numberOfMonths = (furuteObjDate.diff(actualObjDate, 'months')) + 2
 
              console.log(numberOfMonths);
              axios.post('/holyday', {
@@ -61,7 +58,6 @@
                  $("#calendar").datepicker({
                      defaultDate: minDay,
                      beforeShowDay: self.setHolydays,
-                     duration: "slow",
                      dateFormat: 'mm/dd/yy',
                      minDate: minDay,
                      maxDate: maxDate,

@@ -16,6 +16,8 @@ Flight::route('POST /holyday', function(){
     if($year == '2008'){ 
       $response = $hapi->holidays($parameters);
       Flight::json($response);
+    }else{
+      Flight::json(['holidays'=>[]]);
     }
 
 });
