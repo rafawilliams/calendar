@@ -46,12 +46,16 @@
 
              var numberOfMonths = (furuteObjDate.diff(actualObjDate, 'months')) + 2
 
-             console.log(numberOfMonths);
              axios.post('/holyday', {
 
                  country_code: this.form.country_code,
                  year: actualObjDate.year()
              }).then(function(response) {
+
+                 if (response.data.status == "400") {
+                     alert(response.data.error);
+                     return false;
+                 }
 
                  self.holidays = response.data.holidays;
 
