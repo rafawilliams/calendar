@@ -1,0 +1,9 @@
+# Dependencias
+vendor/
+
+# Variables de entorno
+.env
+
+# Sistema operativo
+.DS_Store
+Thumbs.db

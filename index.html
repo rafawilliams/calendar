@@ -10,9 +10,9 @@
     <link rel="stylesheet" href="css/bulma.css">
     <link rel="stylesheet" href="css/app.css">
     <script src="js/jquery.js"></script>
-    <script src="js/moment.min.js"></script>
+    <script src="js/dayjs.min.js"></script>
+    <script src="js/dayjs-customParseFormat.min.js"></script>
     <script src="js/axios.min.js"></script>
-
 </head>
 
 <body>
@@ -22,12 +22,8 @@
         <section class="hero is-small is-primary is-bold">
             <div class="hero-body">
                 <div class="container">
-                    <h1 class="title">
-                        ProSoft
-                    </h1>
-                    <h2 class="subtitle">
-                        Programming Exercise UI Devs
-                    </h2>
+                    <h1 class="title">ProSoft</h1>
+                    <h2 class="subtitle">Programming Exercise UI Devs</h2>
                 </div>
             </div>
             <div class="notification">
@@ -35,50 +31,62 @@
 
                     <div class="field is-horizontal">
                         <div class="field-label">
-                            <label class="label">Start Date</label>
+                            <label class="label" for="date1">Start Date</label>
                         </div>
                         <div class="field-body">
                             <div class="field">
                                 <div class="control">
-                                    <input id="date1" name="dqt" type="text" v-model="form.start_date" class="input is-hovered" placeholder="mm/dd/yyyy">
+                                    <input id="date1" name="dqt" type="text" v-model="form.start_date"
+                                        :class="['input', 'is-hovered', errors.start_date ? 'is-danger' : '']"
+                                        placeholder="mm/dd/yyyy">
                                 </div>
+                                <p v-if="errors.start_date" class="help is-danger">{{ errors.start_date }}</p>
                             </div>
                         </div>
                     </div>
+
                     <div class="field is-horizontal">
                         <div class="field-label">
-                            <label class="label">Number Of days</label>
+                            <label class="label" for="number_of">Number Of Days</label>
                         </div>
                         <div class="field-body">
                             <div class="field">
                                 <div class="control">
-                                    <input id='number_of' type="number" v-model="form.days_number" class="input is-hovered">
+                                    <input id="number_of" type="number" v-model="form.days_number" min="1"
+                                        :class="['input', 'is-hovered', errors.days_number ? 'is-danger' : '']">
                                 </div>
+                                <p v-if="errors.days_number" class="help is-danger">{{ errors.days_number }}</p>
                             </div>
                         </div>
                     </div>
+
                     <div class="field is-horizontal">
                         <div class="field-label">
-                            <label class="label">Country Code</label>
+                            <label class="label" for="country_code">Country Code</label>
                         </div>
                         <div class="field-body">
                             <div class="field">
                                 <div class="control">
-                                    <input id='country_code' type="text" v-model="form.country_code" class="input is-hovered" placeholder="US">
+                                    <input id="country_code" type="text" v-model="form.country_code"
+                                        :class="['input', 'is-hovered', errors.country_code ? 'is-danger' : '']"
+                                        placeholder="US" maxlength="2">
                                 </div>
+                                <p v-if="errors.country_code" class="help is-danger">{{ errors.country_code }}</p>
                             </div>
                         </div>
                     </div>
+
                     <div class="field is-horizontal">
-                        <div class="field-label">
-                            <!-- Left empty for spacing -->
-                        </div>
+                        <div class="field-label"></div>
                         <div class="field-body">
                             <div class="field">
                                 <div class="control">
-                                    <button class="button is-info is-pulled-right" @click.prevent="submit()">
-                                Submit
-                                </button>
+                                    <button class="button is-info is-pulled-right"
+                                        :class="{ 'is-loading': loading }"
+                                        :disabled="loading"
+                                        @click.prevent="submit()">
+                                        Submit
+                                    </button>
                                 </div>
                             </div>
                         </div>
@@ -86,7 +94,6 @@
 
                 </div>
                 <div class="container has-text-centered">
-
                     <div class="columns">
                         <div class="column"></div>
                         <div class="column">
@@ -96,7 +103,6 @@
                     </div>
                 </div>
             </div>
-
         </section>
     </div>
 

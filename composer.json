@@ -1,6 +1,10 @@
 {
     "require": {
-        "mikecao/flight": "^1.3",
-        "joshtronic/php-holidayapi": "dev-master"
+        "flightphp/core": "^3.18"
+    },
+    "autoload": {
+        "psr-4": {
+            "HolidayAPI\\": "src/HolidayAPI/"
+        }
     }
 }

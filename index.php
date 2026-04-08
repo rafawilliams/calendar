@@ -1,25 +1,32 @@
 <?php
+error_reporting(E_ALL & ~E_DEPRECATED & ~E_NOTICE);
 require 'vendor/autoload.php';
 
-Flight::route('POST /holyday', function(){
+Flight::route('POST /holiday', function() {
 
-    $hapi = new HolidayAPI\v1('5a56524c-a8ff-4a50-a9af-5a088d594921');
-   
-    $code = Flight::request()->data->country_code;
-    $year = Flight::request()->data->year;
+    $data = Flight::request()->data;
+    $code = strtoupper(trim((string) $data->country_code));
+    $year = (int) $data->year;
 
-    $parameters = array(
-       'country' => $code,
-       'year'    => $year,
-    );
-
-    if($year == '2008'){ 
-      $response = $hapi->holidays($parameters);
-      Flight::json($response);
-    }else{
-      Flight::json(['holidays'=>[]]);
+    if (!preg_match('/^[A-Z]{2}$/', $code)) {
+        Flight::json(['status' => '400', 'error' => 'Invalid country code. Use a 2-letter ISO code (e.g. US, MX).'], 400);
+        return;
     }
 
+    $currentYear = (int) date('Y');
+    if ($year < 2000 || $year > $currentYear) {
+        Flight::json(['status' => '400', 'error' => "Year must be between 2000 and {$currentYear}."], 400);
+        return;
+    }
+
+    $hapi = new HolidayAPI\v1(getenv('HOLIDAYAPI_KEY'));
+
+    $response = $hapi->holidays([
+        'country' => $code,
+        'year'    => $year,
+    ]);
+
+    Flight::json($response);
 });
 
 Flight::start();
