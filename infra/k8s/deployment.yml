@@ -1,0 +1,45 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: calendar-app
+  namespace: calendar
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: calendar-app
+  template:
+    metadata:
+      labels:
+        app: calendar-app
+    spec:
+      containers:
+        - name: calendar-app
+          image: __ECR_URI__:__IMAGE_TAG__
+          ports:
+            - containerPort: 80
+          env:
+            - name: HOLIDAYAPI_KEY
+              valueFrom:
+                secretKeyRef:
+                  name: calendar-secrets
+                  key: HOLIDAYAPI_KEY
+          resources:
+            requests:
+              cpu: 100m
+              memory: 128Mi
+            limits:
+              cpu: 250m
+              memory: 256Mi
+          readinessProbe:
+            httpGet:
+              path: /
+              port: 80
+            initialDelaySeconds: 10
+            periodSeconds: 10
+          livenessProbe:
+            httpGet:
+              path: /
+              port: 80
+            initialDelaySeconds: 20
+            periodSeconds: 30
